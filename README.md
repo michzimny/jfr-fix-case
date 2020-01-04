@@ -8,7 +8,9 @@ Currently by JFR Pary only.
 
 To process directories top-down starting from the current working directory, run:
 
-`python3 fix-case.py`
+`python fix-case.py`
+
+You can use either Python 2 or 3.
 
 It does not work in file systems that are case insensitive.
 

@@ -81,13 +81,21 @@ def test():
         'W-innypref.html',
     ]
 
-    fixed_filenames = wrong_filenames.copy()
+    fixed_filenames = _copy(wrong_filenames)
     changes = { src: dest for src, dest in ParyResultDirectory(wrong_filenames).get_changes() }
     for i, filename in enumerate(fixed_filenames):
         if filename in changes:
             fixed_filenames[i] = changes[filename]
 
     assert fixed_filenames == proper_filenames, fixed_filenames
+
+
+def _copy(wrong_filenames):
+    if hasattr(wrong_filenames, 'copy'):
+        return wrong_filenames.copy()
+    else:
+        import copy
+        return copy.deepcopy(wrong_filenames)
 
 
 def process(rootpath):
