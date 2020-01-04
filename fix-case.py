@@ -26,20 +26,19 @@ class ParyResultDirectory:
         self.filenames = filenames
 
     def get_changes(self):
-        prefix = self._deduce_prefix()
+        prefixes = list(self._deduce_prefixes())
         for filename in self.filenames:
-            if prefix:
+            for prefix in prefixes:
                 fixed_filename = self._fix_case_for_filename(prefix, filename)
                 if filename != fixed_filename:
                     yield filename, fixed_filename
             if filename in self.STATIC_CHANGES:
                 yield filename, self.STATIC_CHANGES[filename]
 
-    def _deduce_prefix(self):
+    def _deduce_prefixes(self):
         for filename in self.filenames:
             if filename.startswith(self.W_FILENAME_BEGIN) and filename.endswith(self.W_FILENAME_END):
-                return self._extract_prefix(filename)
-        return None
+                yield self._extract_prefix(filename)
 
     def _extract_prefix(self, filename):
         without_begin = filename[len(self.W_FILENAME_BEGIN):]
@@ -69,6 +68,7 @@ def test():
         '19XXyywyn.txt',
         '19XXyy049.html',
         'myajaxp.js',
+        'w-innypref.html',
     ]
     proper_filenames = [
         'W-19XXyy.html',
@@ -78,6 +78,7 @@ def test():
         '19XXyyWYN.txt',
         '19XXyy049.html',
         'myAjaxP.js',
+        'W-innypref.html',
     ]
 
     fixed_filenames = wrong_filenames.copy()
