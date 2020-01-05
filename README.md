@@ -19,3 +19,6 @@ It does not work in file systems that are case insensitive.
 Some FTP clients (?) breaks letter case in filenames. 
 This script fixes such broken filenames.
 
+## TODO
+
+* Add support for JFR Teamy, for filenames with capital letters, such as `<prefix>T1.html`.
